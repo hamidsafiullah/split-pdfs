@@ -1,0 +1,71 @@
+<div class="landing-page">
+    <div class="content-container">
+        <div class="hero-section">
+            <h1 class="mat-display-2">Welcome to EPPPS</h1>
+            <mat-card class="intro-card">
+                <mat-card-content>
+                    <p class="mat-h2">Your one-stop solution for PDF management and seamless integration with Fornax.
+                    </p>
+                    <div class="action-buttons" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"
+                        (drop)="onDrop($event)">
+                        <button mat-raised-button color="primary" (click)="fileInput.click()">
+                            <mat-icon>cloud_upload</mat-icon>
+                            Upload a PDF
+                        </button>
+                        <input title="Upload" #fileInput type="file" class="upload-button"
+                            (change)="onFileSelected($event)" accept="pdf">
+                        <p>or drag and drop files here</p>
+                    </div>
+
+                    <div *ngIf="progress > 0" class="mat-h2"> <mat-progress-bar mode="determinate"
+                            [value]="progress"></mat-progress-bar>
+                    </div>
+
+                    <div *ngIf="splitFileUrls.length > 0" class="split-files">
+                        <h3>Split PDF Pages:</h3>
+                        <ul>
+                            <li *ngFor="let url of splitFileUrls">
+                                <p>{{ url }}</p>
+                                <button mat-button (click)="viewInFornax(url)">View in Fornax</button>
+                            </li>
+                        </ul>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <div class="features-section">
+            <div class="features-grid">
+                <mat-card class="feature-card">
+                    <mat-card-header>
+                        <mat-icon color="primary">description</mat-icon>
+                        <mat-card-title>PDF Management</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>Efficiently manage and organize your PDF documents with our intuitive interface.</p>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="feature-card">
+                    <mat-card-header>
+                        <mat-icon color="primary">integration_instructions</mat-icon>
+                        <mat-card-title>Fornax Integration</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>Seamlessly integrate with Fornax for enhanced document processing capabilities.</p>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="feature-card">
+                    <mat-card-header>
+                        <mat-icon color="primary">security</mat-icon>
+                        <mat-card-title>Secure Storage</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>Your documents are safely stored with enterprise-grade security measures.</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>
