@@ -21,15 +21,50 @@
                             [value]="progress"></mat-progress-bar>
                     </div>
 
-                    <div *ngIf="splitFileUrls.length > 0" class="split-files">
-                        <h3>Split PDF Pages:</h3>
-                        <ul>
-                            <li *ngFor="let url of splitFileUrls">
-                                <p>{{ url }}</p>
-                                <button mat-button (click)="viewInFornax(url)">View in Fornax</button>
-                            </li>
-                        </ul>
+                    <mat-progress-bar *ngIf="progress > 0" mode="determinate" [value]="progress">
+                    </mat-progress-bar>
+
+                    <div class="button-container">
+                        <button mat-raised-button color="primary" (click)="showFullScreenViewer()"
+                            *ngIf="pdfUrls.length > 0 && !showPdfViewer" class="view-pdfs-button">
+                            <mat-icon>picture_as_pdf</mat-icon>
+                            <span>View PDFs</span>
+                        </button>
                     </div>
+
+                    <div class="pdf-viewer-overlay" *ngIf="showPdfViewer">
+                        <div class="pdf-viewer-header">
+                            <span class="page-info">Page {{currentPdfIndex + 1}} of {{pdfUrls.length}}</span>
+                            <button mat-icon-button (click)="closeViewer()" class="close-button">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="pdf-viewer-content">
+                            <button mat-icon-button [disabled]="currentPdfIndex === 0" (click)="previousPdf()"
+                                class="nav-button prev-button">
+                                <mat-icon>chevron_left</mat-icon>
+                            </button>
+
+                            <div class="pdf-container">
+                                <div class="pdf-slides"
+                                    [style.transform]="'translateX(' + (-currentPdfIndex * 100) + '%)'">
+                                    <div class="pdf-slide" *ngFor="let url of pdfUrls">
+                                        <iframe [src]="url" class="pdf-frame" loading="lazy">
+                                        </iframe>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button mat-icon-button [disabled]="currentPdfIndex === pdfUrls.length - 1"
+                                (click)="nextPdf()" class="nav-button next-button">
+                                <mat-icon>chevron_right</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+
+
                 </mat-card-content>
             </mat-card>
         </div>
